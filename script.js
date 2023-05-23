@@ -23,14 +23,17 @@ function initialiseGame() {
 
 initialiseGame();
 
+function displayMessage(message) {
+  message.textContent = message;
+}
+
 document.querySelector('.check').addEventListener('click', function () {
   let guess = Number(document.querySelector('.guess').value);
   console.log(guess);
   if (guessString.value == '') {
-    message.textContent = 'No number input';
+    displayMessage('No number input');
   } else if (guess.value > 20 || guess.value < 1) {
-    message.textContent =
-      'Out of range. Please select only numbers from 1 to 20';
+    displayMessage('Out of range. Please select only numbers from 1 to 20');
   } else {
     if (score > 0) {
       // when win occurs
@@ -43,11 +46,9 @@ document.querySelector('.check').addEventListener('click', function () {
           highscore = score;
           document.querySelector('.highscore').textContent = highscore;
         }
-      } else if (guess > secretNumber) {
-        message.textContent = 'Too high. Please try again';
-        score--;
       } else {
-        message.textContent = 'Too low. Please try again';
+        message.textContent =
+          guess > secretNumber ? 'Too high.' : 'Too low.' + 'Please try again';
         score--;
       }
       scoreString.textContent = score;
