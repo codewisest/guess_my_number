@@ -1,20 +1,35 @@
 'use strict';
 // select message text content
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber;
 let message = document.querySelector('.message');
 let scoreString = document.querySelector('.score');
+let scoreOriginal = Number(scoreString.textContent);
 let score = Number(scoreString.textContent);
 const body = document.querySelector('body');
 const numberDOM = document.querySelector('.number');
+const again = document.querySelector('.again');
+let guessString = document.querySelector('.guess');
+let highscore = 0;
+
+function initialiseGame() {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  score = scoreOriginal;
+  scoreString.textContent = score;
+  message.textContent = 'Start guessing...';
+  guessString.value = '';
+  numberDOM.textContent = '?';
+  body.style.backgroundColor = '#222';
+}
+
+initialiseGame();
 
 document.querySelector('.check').addEventListener('click', function () {
-  const guessString = document.querySelector('.guess').value;
-  const guess = Number(document.querySelector('.guess').value);
   console.log(secretNumber);
-
-  if (guessString == '') {
+  let guess = Number(document.querySelector('.guess').value);
+  console.log(guess);
+  if (guessString.value == '') {
     message.textContent = 'No number input';
-  } else if (guess > 20 || guess < 1) {
+  } else if (guess.value > 20 || guess.value < 1) {
     message.textContent =
       'Out of range. Please select only numbers from 1 to 20';
   } else {
@@ -25,6 +40,10 @@ document.querySelector('.check').addEventListener('click', function () {
         message.textContent = 'Correct number';
         body.style.backgroundColor = '#60b347';
         numberDOM.style.width = '20rem';
+        if (highscore < score) {
+          highscore = score;
+          document.querySelector('.highscore').textContent = highscore;
+        }
       } else if (guess > secretNumber) {
         message.textContent = 'Too high. Please try again';
         score--;
@@ -38,4 +57,10 @@ document.querySelector('.check').addEventListener('click', function () {
   if (score == 0) {
     message.textContent = 'Why did you choose to lose?';
   }
+});
+
+// play again
+again.addEventListener('click', function () {
+  initialiseGame();
+  console.log(secretNumber);
 });
