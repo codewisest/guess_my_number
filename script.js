@@ -24,7 +24,6 @@ function initialiseGame() {
 initialiseGame();
 
 document.querySelector('.check').addEventListener('click', function () {
-  console.log(secretNumber);
   let guess = Number(document.querySelector('.guess').value);
   console.log(guess);
   if (guessString.value == '') {
@@ -62,5 +61,4 @@ document.querySelector('.check').addEventListener('click', function () {
 // play again
 again.addEventListener('click', function () {
   initialiseGame();
-  console.log(secretNumber);
 });
